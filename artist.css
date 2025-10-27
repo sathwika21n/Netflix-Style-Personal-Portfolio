@@ -1,0 +1,164 @@
+/* Artist Page Specific Styles */
+
+.artist-body {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+}
+
+.artist-hero {
+    height: 100vh;
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+                url('https://images.unsplash.com/photo-1499781350541-7783f6c6a0c8?w=1920') center/cover no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding-top: 100px;
+}
+
+.artist-hero-content h1 {
+    font-size: 5rem;
+    font-weight: bold;
+    background: linear-gradient(45deg, #f093fb, #f5576c, #4facfe);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 1rem;
+}
+
+.artist-hero-content p {
+    font-size: 1.5rem;
+    color: #ffffff;
+}
+
+/* Gallery Styles */
+.gallery {
+    padding: 100px 0;
+    background: #1a1a2e;
+}
+
+.gallery-title {
+    font-size: 3rem;
+    text-align: center;
+    margin-bottom: 1rem;
+    color: #ffffff;
+}
+
+.gallery-subtitle {
+    text-align: center;
+    color: #b3b3b3;
+    margin-bottom: 3rem;
+    font-size: 1.2rem;
+}
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2rem;
+    padding: 2rem 0;
+}
+
+.gallery-item {
+    position: Executive;
+    overflow: hidden;
+    border-radius: 10px;
+    aspect-ratio: 1;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.gallery-item:hover {
+    transform: scale(1.05);
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.gallery-item:hover img {
+    transform: scale(1.1);
+}
+
+.gallery-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+    padding: 2rem;
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+}
+
+.gallery-item:hover .gallery-overlay {
+    transform: translateY(0);
+}
+
+.gallery-overlay h3 {
+    color: #ffffff;
+    margin-bottom: 0.5rem;
+    font-size: 1.5rem;
+}
+
+.gallery-overlay p {
+    color: #b3b3b3;
+    margin-bottom: 0.3rem;
+}
+
+.gallery-date {
+    color: #f093fb;
+    font-weight: bold;
+}
+
+/* Artist About Section */
+.artist-about {
+    padding: 100px 0;
+    background: #16213e;
+}
+
+.artist-about-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.artist-about-content p {
+    font-size: 1.2rem;
+    color: #b3b3b3;
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+}
+
+/* Artist Contact Section */
+.artist-contact {
+    padding: 100px 0;
+    background: #1a1a2e;
+    text-align: center;
+}
+
+.artist-contact-content p {
+    font-size: 1.3rem;
+    color: #b3b3b3;
+    margin-bottom: 2rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .artist-hero-content h1 {
+        font-size: 3rem;
+    }
+    
+    .artist-hero-content p {
+        font-size: 1.2rem;
+    }
+    
+    .gallery-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .gallery-title {
+        font-size: 2rem;
+    }
+}
+

@@ -1,3 +1,17 @@
+// Who's Watching Profile Selection
+const whoIsWatchingSection = document.querySelector('.who-is-watching');
+const heroSection = document.querySelector('.hero');
+const profileButtons = document.querySelectorAll('.profile');
+
+profileButtons.forEach(profile => {
+    profile.addEventListener('click', function() {
+        const selectedProfile = this.getAttribute('data-profile');
+        
+        // Navigate to the appropriate page based on selected profile
+        window.location.href = `${selectedProfile}.html`;
+    });
+});
+
 // Navbar scroll effect
 window.addEventListener('scroll', () => {
     const navbar = document.querySelector('.navbar');
@@ -209,6 +223,6 @@ if (heroTitle) {
     // typeWriter();
 }
 
-// Console message
+//console msg 
 console.log('%c Welcome to my portfolio! ', 'background: #e50914; color: #fff; font-size: 20px; padding: 10px;');
 console.log('%c Feel free to explore! ', 'background: #fff; color: #e50914; font-size: 14px; padding: 5px;');

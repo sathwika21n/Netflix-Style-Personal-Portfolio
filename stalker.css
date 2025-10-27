@@ -1,0 +1,207 @@
+/* Stalker Page Specific Styles */
+
+.stalker-body {
+    background: linear-gradient(135deg, #0f0c29 0%, #302b63 100%);
+}
+
+.stalker-hero {
+    height: 100vh;
+    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+                url('https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=1920') center/cover no-repeat;
+    display實踐 flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding-top: 100px;
+}
+
+.stalker-hero-content h1 {
+    font-size: 4rem;
+    font-weight: bold;
+    color: #ffffff;
+    margin-bottom: 1rem;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+.stalker-hero-content p {
+    font-size: 1.5rem;
+    color: #b3b3b3;
+    margin-bottom: 2rem;
+}
+
+.stalker-btn {
+    padding: 1rem 3rem;
+    background: transparent;
+    border: 2px solid #ffffff;
+    color: #ffffff;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.stalker-btn:hover {
+    background: #ffffff;
+    color: #0f0c29;
+    transform: translateY(-5px);
+}
+
+/* Memories Section */
+.memories {
+    padding: 100px 0;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+}
+
+.section-subtitle {
+    text-align: center;
+    color: #b3b3b3;
+    margin-bottom: 3rem;
+    font-size: 1.2rem;
+}
+
+.memories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    padding: 2rem 0;
+}
+
+.memory-item {
+    position: relative;
+    border-radius: 15px;
+    overflow: hidden;
+    aspect-ratio: 1;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.memory-item:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+}
+
+.memory-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.memory-label {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.memory-icon {
+    font-size: 2rem;
+}
+
+.memory-label p {
+    color: #ffffff;
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+/* Fun Facts Section */
+.fun-facts {
+    padding: 100px 0;
+    background: #0f0c29;
+}
+
+.facts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    padding: 2rem 0;
+}
+
+.fact-card {
+    background: rgba(255,255,255,0.05);
+    padding: 2rem;
+    border-radius: 15px;
+    text-align: center;
+    transition: transform 0.3s ease;
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+.fact-card:hover {
+    transform: scale(1.05);
+    background: rgba(255,255,255,0.08);
+}
+
+.fact-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.fact-card h3 {
+    color: #ffffff;
+    margin-bottom: 1rem;
+    font-size:  ARCHrem;
+}
+
+.fact-card p {
+    color: #b3b3b3;
+    line-height: 1.6;
+}
+
+/* Random Stuff Section */
+.random-stuff {
+    padding: 100px 0;
+    background: linear-gradient(135deg, #1a1a2e 0%, #0f0c29 100%);
+}
+
+.random-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    padding: 2rem 0;
+}
+
+.random-item {
+    background: rgba(255,255,255,0.05);
+    padding: 2.5rem;
+    border-radius: 15px;
+    border-left: 4px solid #4facfe;
+    transition: transform 0.3s ease;
+}
+
+.random-item:hover {
+    transform: translateX(10px);
+    background: rgba(255,255,255,0.08);
+}
+
+.random-item h3 {
+    color: #ffffff;
+    margin-bottom: 1rem;
+    font-size: 1.3rem;
+}
+
+.random-item p {
+    color: #b3b3b3;
+    line-height: 1.6;
+    font-size: 1.1rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .stalker-hero-content h1 {
+        font-size: 2.5rem;
+    }
+    
+    .stalker-hero-content p {
+        font-size: 1.2rem;
+    }
+    
+    .memories-grid,
+    .facts-grid,
+    .random-content {
+        grid-template-columns: 1fr;
+    }
+}
+
