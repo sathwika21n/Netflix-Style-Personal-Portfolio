@@ -7,8 +7,8 @@
 .stalker-hero {
     height: 100vh;
     background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
-                url('https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=1920') center/cover no-repeat;
-    display實踐 flex;
+                url('https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1920') center/cover no-repeat;
+    display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
@@ -72,6 +72,11 @@
     aspect-ratio: 1;
     cursor: pointer;
     transition: transform 0.3s ease;
+}
+
+a.memory-item {
+    text-decoration: none;
+    color: inherit;
 }
 
 .memory-item:hover {

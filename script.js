@@ -1,3 +1,121 @@
+// Function to generate a simple tone (fallback if audio file not found)
+function playNetflixTone() {
+    try {
+        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        const oscillator = audioContext.createOscillator();
+        const gainNode = audioContext.createGain();
+        
+        oscillator.connect(gainNode);
+        gainNode.connect(audioContext.destination);
+        
+        oscillator.frequency.value = 200; // Frequency in Hz
+        oscillator.type = 'sine';
+        
+        gainNode.gain.setValueAtTime(0, audioContext.currentTime);
+        gainNode.gain.linearRampToValueAtTime(0.3, audioContext.currentTime + 0.1);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 1.5);
+        
+        oscillator.start(audioContext.currentTime);
+        oscillator.stop(audioContext.currentTime + 1.5);
+    } catch (error) {
+        console.log('Could not generate tone:', error);
+    }
+}
+
+// Loading Screen Animation
+window.addEventListener('DOMContentLoaded', () => {
+    const loadingScreen = document.getElementById('loading-screen');
+    const whoIsWatchingSection = document.querySelector('.who-is-watching');
+    const netflixSound = document.getElementById('netflix-sound');
+    
+    // Function to attempt playing sound
+    function attemptPlaySound(audioElement) {
+        if (!audioElement) return false;
+        
+        // Set volume
+        audioElement.volume = 0.5;
+        
+        // Try to play the sound
+        const playPromise = audioElement.play();
+        
+        if (playPromise !== undefined) {
+            playPromise
+                .then(() => {
+                    console.log('Sound playing successfully');
+                    return true;
+                })
+                .catch(error => {
+                    console.log('Autoplay prevented or file not found:', error);
+                    return false;
+                });
+        }
+        return false;
+    }
+    
+    // Check if audio file exists and can play
+    let soundPlayed = false;
+    
+    if (netflixSound) {
+        // Listen for error (file not found)
+        netflixSound.addEventListener('error', (e) => {
+            console.log('Audio file not found or failed to load');
+            // Use fallback tone
+            if (!soundPlayed) {
+                setTimeout(() => {
+                    playNetflixTone();
+                    soundPlayed = true;
+                }, 500);
+            }
+        });
+        
+        // Listen for loaded event
+        netflixSound.addEventListener('canplaythrough', () => {
+            // Try to play the sound
+            attemptPlaySound(netflixSound);
+            soundPlayed = true;
+        });
+        
+        // Try to play immediately (may be blocked by autoplay policy)
+        if (!attemptPlaySound(netflixSound)) {
+            soundPlayed = false;
+        }
+    } else {
+        // No audio element found, use tone
+        setTimeout(() => {
+            playNetflixTone();
+            soundPlayed = true;
+        }, 500);
+    }
+    
+    // Fallback: If no sound played after a moment, use generated tone
+    setTimeout(() => {
+        if (!soundPlayed) {
+            playNetflixTone();
+        }
+    }, 800);
+    
+    // After animation completes, fade out loading screen and show "Who's Watching"
+    setTimeout(() => {
+        if (loadingScreen) {
+            loadingScreen.classList.add('fade-out');
+        }
+        
+        // Show "Who's Watching" section
+        setTimeout(() => {
+            if (whoIsWatchingSection) {
+                whoIsWatchingSection.classList.add('show');
+            }
+        }, 300);
+        
+        // Remove loading screen from DOM after fade out
+        setTimeout(() => {
+            if (loadingScreen) {
+                loadingScreen.style.display = 'none';
+            }
+        }, 800);
+    }, 2500); // Total animation duration
+});
+
 // Who's Watching Profile Selection
 const whoIsWatchingSection = document.querySelector('.who-is-watching');
 const heroSection = document.querySelector('.hero');

@@ -8,8 +8,28 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
+    <!-- Audio element for Netflix-style sound -->
+    <!-- To add your own sound: Place an audio file named "netflix-sound.mp3" in this folder -->
+    <!-- If file not found, a generated tone will play as fallback -->
+    <audio id="netflix-sound" preload="auto">
+        <source src="netflix-sound.mp3" type="audio/mpeg">
+        <source src="netflix-sound.ogg" type="audio/ogg">
+        <source src="netflix-sound.wav" type="audio/wav">
+    </audio>
+
+    <!-- Loading Screen with Logo -->
+    <div id="loading-screen" class="loading-screen">
+        <div class="loading-logo">
+            <svg viewBox="0 0 200 200" class="logo-svg">
+                <!-- Letter P -->
+                <path d="M50 40 L50 160 M50 40 L100 40 Q130 40 130 70 Q130 100 100 100 L50 100" stroke="#e50914" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" fill="none" class="logo-path"/>
+            </svg>
+            <div class="logo-text">Portfolio</div>
+        </div>
+    </div>
+
     <!-- Who's Watching Section -->
-    <section id="whoIsWatching" class="who-is-watching active">
+    <section id="whoIsWatching" class="who-is-watching">
         <div class="watching-container">
             <h1 class="watching-title">Who's watching?</h1>
             <div class="profiles">
