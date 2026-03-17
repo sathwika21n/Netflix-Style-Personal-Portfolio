@@ -286,7 +286,7 @@ viewCodeButtons.forEach((btn, index) => {
     btn.addEventListener('click', (e) => {
         e.stopPropagation();
         // Replace with actual GitHub URLs
-        alert(`Opening GitHub repository for project ${index + 1}!`);
+        //alert(`Opening GitHub repository for project ${index + 1}!`);
     });
 });
 

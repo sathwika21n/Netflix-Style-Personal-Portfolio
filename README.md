@@ -111,12 +111,9 @@ netflixStyle Personal Portfolio/
 - Edge
 - Mobile browsers (iOS Safari, Chrome Mobile)
 
-
-
 ## Acknowledgments
 
 - Inspired by Netflix's user interface design
-- Images sourced from Unsplash (free for personal use)
 - Font Awesome for icons
 - Built with modern web standards
 
