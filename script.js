@@ -226,18 +226,10 @@ projectCards.forEach(card => {
 
 // Hero buttons click handlers
 const viewWorkBtn = document.querySelector('.hero-buttons .btn-primary');
-const downloadResumeBtn = document.querySelector('.hero-buttons .btn-secondary');
 
 if (viewWorkBtn) {
     viewWorkBtn.addEventListener('click', () => {
         document.querySelector('#projects').scrollIntoView({ behavior: 'smooth' });
-    });
-}
-
-if (downloadResumeBtn) {
-    downloadResumeBtn.addEventListener('click', () => {
-        // Replace with actual resume download link
-        alert('Resume download functionality would go here!');
     });
 }
 

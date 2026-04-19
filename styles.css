@@ -348,12 +348,16 @@ body {
 }
 
 .btn-primary, .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     padding: 1rem 2rem;
     font-size: 1.1rem;
     border: none;
     cursor: pointer;
     transition: all 0.3s ease;
     font-weight: bold;
+    text-decoration: none;
     text-transform: uppercase;
     letter-spacing: 1px;
 }
