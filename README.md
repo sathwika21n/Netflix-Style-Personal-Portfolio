@@ -57,6 +57,42 @@ python3 -m http.server 8000
 # Then visit http://localhost:8000
 ```
 
+### Running With The AI Chatbot
+The chatbot can run in fallback mode by opening the HTML files directly, but real AI answers require the Node server so your API key stays private.
+
+```bash
+# Create your local env file
+cp .env.example .env
+
+# Add your OpenRouter or OpenAI API key to .env, then start the site
+npm start
+
+# Open the site
+http://localhost:3000
+```
+
+For OpenRouter, use:
+
+```env
+AI_PROVIDER=openrouter
+OPENROUTER_API_KEY=your_openrouter_api_key_here
+AI_MODEL=openai/gpt-4o-mini
+PORT=3000
+HOST=127.0.0.1
+```
+
+For OpenAI, use:
+
+```env
+AI_PROVIDER=openai
+OPENAI_API_KEY=your_openai_api_key_here
+AI_MODEL=gpt-5.4-nano
+PORT=3000
+HOST=127.0.0.1
+```
+
+The server uses the portfolio content as context and sends questions through `/api/chat`. Do not put your API key directly in browser JavaScript.
+
 ## 📁 Project Structure
 
 ```
@@ -119,4 +155,3 @@ netflixStyle Personal Portfolio/
 
 
 *Double-click `index.html` to start exploring the different sides of the portfolio.*
-

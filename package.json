@@ -1,0 +1,13 @@
+{
+  "name": "netflix-style-personal-portfolio",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Netflix-style personal portfolio with an OpenAI-powered chatbot.",
+  "scripts": {
+    "start": "node server.js",
+    "check": "node --check script.js && node --check server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

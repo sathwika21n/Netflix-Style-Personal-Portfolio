@@ -144,15 +144,19 @@ window.addEventListener('scroll', () => {
 const menuToggle = document.querySelector('.menu-toggle');
 const navbarMenu = document.querySelector('.navbar-menu');
 
-menuToggle.addEventListener('click', () => {
-    navbarMenu.classList.toggle('active');
-});
+if (menuToggle && navbarMenu) {
+    menuToggle.addEventListener('click', () => {
+        navbarMenu.classList.toggle('active');
+    });
+}
 
 // Close mobile menu when clicking on a link
 const navLinks = document.querySelectorAll('.navbar-menu a');
 navLinks.forEach(link => {
     link.addEventListener('click', () => {
-        navbarMenu.classList.remove('active');
+        if (navbarMenu) {
+            navbarMenu.classList.remove('active');
+        }
     });
 });
 
@@ -336,3 +340,220 @@ if (heroTitle) {
 //console msg 
 console.log('%c Welcome to my portfolio! ', 'background: #e50914; color: #fff; font-size: 20px; padding: 10px;');
 console.log('%c Feel free to explore! ', 'background: #fff; color: #e50914; font-size: 14px; padding: 5px;');
+
+// Portfolio AI Assistant
+const portfolioAssistantData = [
+    {
+        topic: 'profile',
+        keywords: ['who', 'sathwika', 'about', 'profile', 'summary', 'intro', 'introduction'],
+        answer: 'Sathwika Thatiparthi is a Computer Science student at the University of Texas at Dallas. Her portfolio focuses on full-stack development, software engineering, web development, system design, creative work, and personal projects.'
+    },
+    {
+        topic: 'education',
+        keywords: ['education', 'school', 'college', 'university', 'utd', 'ut dallas', 'degree', 'student'],
+        answer: 'Sathwika is currently pursuing Computer Science at the University of Texas at Dallas.'
+    },
+    {
+        topic: 'experience',
+        keywords: ['experience', 'work', 'background', 'hire', 'professional', 'internship', 'job', 'career'],
+        answer: 'Sathwika has hands-on project experience in full-stack development and software engineering. Her portfolio highlights projects that show technical proficiency, problem-solving ability, clean code habits, and readiness to contribute to software development teams.'
+    },
+    {
+        topic: 'skills',
+        keywords: ['skills', 'technologies', 'tech stack', 'languages', 'frameworks', 'tools', 'programming'],
+        answer: 'Her listed skills include HTML5, CSS3, JavaScript, React, Node.js, and Python. The portfolio also mentions full-stack development, modern web technologies, software engineering, and system design.'
+    },
+    {
+        topic: 'projects',
+        keywords: ['projects', 'portfolio', 'built', 'created', 'github', 'code', 'apps', 'application'],
+        answer: 'Featured projects include Advisor AI, an AI-powered academic advisor built with Python3 and Streamlit; an Alumni Tracking System using Vue.js, TypeScript, and Jupyter Notebook; and EndoTrack, a React, TypeScript, and Python project focused on endometriosis support with personalized recommendations and local hospital suggestions.'
+    },
+    {
+        topic: 'advisor ai',
+        keywords: ['advisor', 'academic', 'course', 'degree path', 'streamlit'],
+        answer: 'Advisor AI is an AI-powered academic advisor application that helps students navigate course selections and degree paths. The portfolio lists Python3 and Streamlit as its technologies.'
+    },
+    {
+        topic: 'alumni tracking system',
+        keywords: ['alumni', 'tracking', 'naf', 'vue', 'typescript', 'jupyter'],
+        answer: 'The Alumni Tracking System is described as a system for tracking and managing alumni information and engagement. Its listed technologies include Vue.js, TypeScript, and Jupyter Notebook.'
+    },
+    {
+        topic: 'endotrack',
+        keywords: ['endotrack', 'endometriosis', 'hospital', 'recommendations', 'wehack'],
+        answer: 'EndoTrack focuses on endometriosis. Patients can enter their information and receive personalized recommendations plus local hospital suggestions. The portfolio lists Python, TypeScript, and React for this project.'
+    },
+    {
+        topic: 'contact',
+        keywords: ['contact', 'email', 'linkedin', 'github', 'reach', 'social', 'connect'],
+        answer: 'You can connect with Sathwika through the contact section of the site. The developer page links to her GitHub at github.com/sathwika21n and LinkedIn at linkedin.com/in/sathwika-thatiparthi-221019230.'
+    },
+    {
+        topic: 'resume',
+        keywords: ['resume', 'cv', 'download'],
+        answer: 'The developer page includes a Download Resume button for Sathwika_Thatiparthi_Resume.pdf.'
+    },
+    {
+        topic: 'site',
+        keywords: ['website', 'portfolio', 'netflix', 'profiles', 'artist', 'personal', 'hiring manager'],
+        answer: 'This is a Netflix-style personal portfolio with profile pages for Developer, Hiring Manager, Personal Life, and Artist views. It uses HTML, CSS, JavaScript, Font Awesome icons, animations, and responsive design.'
+    }
+];
+
+function initializePortfolioAssistant() {
+    if (document.querySelector('.chatbot-widget')) return;
+
+    const pageText = Array.from(document.querySelectorAll('h1, h2, h3, p, .project-tags span'))
+        .map(element => element.textContent.trim())
+        .filter(Boolean)
+        .join(' ');
+
+    const chatbot = document.createElement('aside');
+    chatbot.className = 'chatbot-widget';
+    chatbot.setAttribute('aria-label', 'Portfolio AI assistant');
+    chatbot.innerHTML = `
+        <button class="chatbot-toggle" type="button" aria-label="Open portfolio assistant">
+            <i class="fas fa-robot"></i>
+        </button>
+        <div class="chatbot-panel" aria-hidden="true">
+            <div class="chatbot-header">
+                <div>
+                    <p class="chatbot-eyebrow">Portfolio AI</p>
+                    <h2>Ask about Sathwika</h2>
+                </div>
+                <button class="chatbot-close" type="button" aria-label="Close assistant">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="chatbot-messages" aria-live="polite">
+                <div class="chat-message bot-message">
+                    Hi! Ask me about Sathwika's experience, projects, skills, education, resume, or contact info.
+                </div>
+            </div>
+            <div class="chatbot-suggestions" aria-label="Suggested questions">
+                <button type="button">What is Sathwika's experience?</button>
+                <button type="button">What projects has she built?</button>
+                <button type="button">What are her skills?</button>
+            </div>
+            <form class="chatbot-form">
+                <input type="text" placeholder="Ask a question..." aria-label="Ask a question about the portfolio" autocomplete="off">
+                <button type="submit" aria-label="Send question">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </form>
+        </div>
+    `;
+
+    document.body.appendChild(chatbot);
+
+    const toggle = chatbot.querySelector('.chatbot-toggle');
+    const close = chatbot.querySelector('.chatbot-close');
+    const panel = chatbot.querySelector('.chatbot-panel');
+    const messages = chatbot.querySelector('.chatbot-messages');
+    const form = chatbot.querySelector('.chatbot-form');
+    const input = chatbot.querySelector('.chatbot-form input');
+    const suggestionButtons = chatbot.querySelectorAll('.chatbot-suggestions button');
+
+    const setOpen = (isOpen) => {
+        chatbot.classList.toggle('open', isOpen);
+        panel.setAttribute('aria-hidden', String(!isOpen));
+        toggle.setAttribute('aria-label', isOpen ? 'Close portfolio assistant' : 'Open portfolio assistant');
+        if (isOpen) input.focus();
+    };
+
+    const addMessage = (message, type, extraClass = '') => {
+        const bubble = document.createElement('div');
+        bubble.className = `chat-message ${type}-message ${extraClass}`.trim();
+        bubble.textContent = message;
+        messages.appendChild(bubble);
+        messages.scrollTop = messages.scrollHeight;
+        return bubble;
+    };
+
+    const answerFromPortfolioData = (question) => {
+        const normalizedQuestion = question.toLowerCase();
+
+        const rankedTopics = portfolioAssistantData
+            .map(item => {
+                const score = item.keywords.reduce((total, keyword) => {
+                    return normalizedQuestion.includes(keyword) ? total + keyword.length : total;
+                }, 0);
+                return { ...item, score };
+            })
+            .sort((first, second) => second.score - first.score);
+
+        if (rankedTopics[0].score > 0) {
+            return rankedTopics[0].answer;
+        }
+
+        const matchingPageSentence = (pageText.match(/[^.!?]+[.!?]*/g) || [])
+            .find(sentence => {
+                const importantWords = normalizedQuestion
+                    .split(/\W+/)
+                    .filter(word => word.length > 4);
+                return importantWords.some(word => sentence.toLowerCase().includes(word));
+            });
+
+        if (matchingPageSentence) {
+            return `From this page: ${matchingPageSentence}`;
+        }
+
+        return 'I can answer based on the portfolio content I have here. Try asking about Sathwika\'s experience, education, skills, projects, resume, GitHub, LinkedIn, or contact info.';
+    };
+
+    const answerQuestion = async (question) => {
+        try {
+            const response = await fetch('/api/chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ question })
+            });
+
+            const payload = await response.json();
+            if (!response.ok) {
+                return `${answerFromPortfolioData(question)}\n\nAI service message: ${payload.error || 'The AI assistant is unavailable right now.'}`;
+            }
+
+            return payload.answer || answerFromPortfolioData(question);
+        } catch (error) {
+            return `${answerFromPortfolioData(question)}\n\nReal AI mode is not connected right now. Start the Node server with your OpenAI API key to enable live AI answers.`;
+        }
+    };
+
+    const handleQuestion = (question) => {
+        const trimmedQuestion = question.trim();
+        if (!trimmedQuestion) return;
+
+        addMessage(trimmedQuestion, 'user');
+        input.value = '';
+        input.disabled = true;
+        form.querySelector('button').disabled = true;
+
+        window.setTimeout(async () => {
+            const thinkingMessage = addMessage('Thinking...', 'bot', 'thinking-message');
+            const answer = await answerQuestion(trimmedQuestion);
+            thinkingMessage.textContent = answer;
+            thinkingMessage.classList.remove('thinking-message');
+            input.disabled = false;
+            form.querySelector('button').disabled = false;
+            input.focus();
+            messages.scrollTop = messages.scrollHeight;
+        }, 250);
+    };
+
+    toggle.addEventListener('click', () => setOpen(!chatbot.classList.contains('open')));
+    close.addEventListener('click', () => setOpen(false));
+
+    form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        handleQuestion(input.value);
+    });
+
+    suggestionButtons.forEach(button => {
+        button.addEventListener('click', () => handleQuestion(button.textContent));
+    });
+}
+
+document.addEventListener('DOMContentLoaded', initializePortfolioAssistant);
