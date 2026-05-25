@@ -1,5 +1,9 @@
+let isProfileNavigationStarting = false;
+
 // Function to generate a simple tone (fallback if audio file not found)
 function playNetflixTone() {
+    if (isProfileNavigationStarting) return;
+
     try {
         const audioContext = new (window.AudioContext || window.webkitAudioContext)();
         const oscillator = audioContext.createOscillator();
@@ -62,8 +66,10 @@ window.addEventListener('DOMContentLoaded', () => {
             // Use fallback tone
             if (!soundPlayed) {
                 setTimeout(() => {
-                    playNetflixTone();
-                    soundPlayed = true;
+                    if (!isProfileNavigationStarting) {
+                        playNetflixTone();
+                        soundPlayed = true;
+                    }
                 }, 500);
             }
         });
@@ -82,14 +88,16 @@ window.addEventListener('DOMContentLoaded', () => {
     } else {
         // No audio element found, use tone
         setTimeout(() => {
-            playNetflixTone();
-            soundPlayed = true;
+            if (!isProfileNavigationStarting) {
+                playNetflixTone();
+                soundPlayed = true;
+            }
         }, 500);
     }
     
     // Fallback: If no sound played after a moment, use generated tone
     setTimeout(() => {
-        if (!soundPlayed) {
+        if (!soundPlayed && !isProfileNavigationStarting) {
             playNetflixTone();
         }
     }, 800);
@@ -123,10 +131,30 @@ const profileButtons = document.querySelectorAll('.profile');
 
 profileButtons.forEach(profile => {
     profile.addEventListener('click', function() {
+        isProfileNavigationStarting = true;
+
         const selectedProfile = this.getAttribute('data-profile');
-        
-        // Navigate to the appropriate page based on selected profile
-        window.location.href = `${selectedProfile}.html`;
+        const introSound = document.getElementById('netflix-sound');
+        const clickSound = document.getElementById('profile-click-sound');
+
+        if (introSound) {
+            introSound.pause();
+            introSound.currentTime = 0;
+        }
+
+        if (clickSound) {
+            clickSound.pause();
+            clickSound.currentTime = 0;
+            clickSound.volume = 0.8;
+            clickSound.play().catch(error => {
+                console.log('Could not play profile click sound:', error);
+            });
+        }
+
+        // Navigate after the click sound starts.
+        setTimeout(() => {
+            window.location.href = `${selectedProfile}.html`;
+        }, 500);
     });
 });
 
