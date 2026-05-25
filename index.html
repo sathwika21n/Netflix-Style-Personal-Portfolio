@@ -8,27 +8,33 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <!-- Audio element for Netflix-style sound -->
-    <!-- To add your own sound: Place an audio file named "netflix-sound.mp3" in this folder -->
-    <!-- If file not found, a generated tone will play as fallback -->
+    <!-- Audio elements for the cinematic intro and profile selection -->
     <audio id="netflix-sound" preload="auto">
         <source src="netflix-sound.mp3" type="audio/mpeg">
         <source src="netflix-sound.ogg" type="audio/ogg">
         <source src="netflix-sound.wav" type="audio/wav">
     </audio>
     <audio id="profile-click-sound" preload="auto">
-        <source src="profile-click.mp3?v=2" type="audio/mpeg">
+        <source src="profile-click.mp3" type="audio/mpeg">
     </audio>
 
-    <!-- Loading Screen with Logo -->
-    <div id="loading-screen" class="loading-screen">
-        <div class="loading-logo">
-            <svg viewBox="0 0 200 200" class="logo-svg">
-                <!-- Letter P -->
-                <path d="M50 40 L50 160 M50 40 L100 40 Q130 40 130 70 Q130 100 100 100 L50 100" stroke="#e50914" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" fill="none" class="logo-path"/>
-            </svg>
+    <!-- Cinematic Loading Screen -->
+    <div id="loading-screen" class="loading-screen" aria-label="Portfolio opening animation">
+        <div class="cinematic-vignette"></div>
+        <div class="cinematic-beams" aria-hidden="true">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <div class="loading-logo" aria-hidden="true">
+            <div class="cinematic-logo-mark">
+                <span class="portfolio-initial">S</span>
+            </div>
             <div class="logo-text">Portfolio</div>
         </div>
+        <button class="intro-start-btn" type="button">Start Portfolio</button>
     </div>
 
     <!-- Who's Watching Section -->
@@ -65,6 +71,6 @@
         </div>
     </section>
 
-    <script src="script.js?v=2"></script>
+    <script src="script.js?v=8"></script>
 </body>
 </html>

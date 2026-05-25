@@ -1,127 +1,117 @@
 let isProfileNavigationStarting = false;
 
-// Function to generate a simple tone (fallback if audio file not found)
-function playNetflixTone() {
-    if (isProfileNavigationStarting) return;
-
-    try {
-        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-        const oscillator = audioContext.createOscillator();
-        const gainNode = audioContext.createGain();
-        
-        oscillator.connect(gainNode);
-        gainNode.connect(audioContext.destination);
-        
-        oscillator.frequency.value = 200; // Frequency in Hz
-        oscillator.type = 'sine';
-        
-        gainNode.gain.setValueAtTime(0, audioContext.currentTime);
-        gainNode.gain.linearRampToValueAtTime(0.3, audioContext.currentTime + 0.1);
-        gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 1.5);
-        
-        oscillator.start(audioContext.currentTime);
-        oscillator.stop(audioContext.currentTime + 1.5);
-    } catch (error) {
-        console.log('Could not generate tone:', error);
-    }
-}
-
 // Loading Screen Animation
 window.addEventListener('DOMContentLoaded', () => {
     const loadingScreen = document.getElementById('loading-screen');
     const whoIsWatchingSection = document.querySelector('.who-is-watching');
     const netflixSound = document.getElementById('netflix-sound');
-    
-    // Function to attempt playing sound
-    function attemptPlaySound(audioElement) {
-        if (!audioElement) return false;
-        
-        // Set volume
-        audioElement.volume = 0.5;
-        
-        // Try to play the sound
-        const playPromise = audioElement.play();
-        
-        if (playPromise !== undefined) {
-            playPromise
-                .then(() => {
-                    console.log('Sound playing successfully');
-                    return true;
-                })
-                .catch(error => {
-                    console.log('Autoplay prevented or file not found:', error);
-                    return false;
-                });
-        }
-        return false;
+    const profileClickSound = document.getElementById('profile-click-sound');
+    const introStartButton = document.querySelector('.intro-start-btn');
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const introDuration = prefersReducedMotion ? 500 : 3600;
+
+    if (profileClickSound) {
+        profileClickSound.load();
     }
     
-    // Check if audio file exists and can play
     let soundPlayed = false;
+    let introStarted = false;
+
+    function finishIntroAfterDelay() {
+        window.setTimeout(() => {
+            if (loadingScreen) {
+                loadingScreen.classList.add('fade-out');
+            }
+            
+            window.setTimeout(() => {
+                if (whoIsWatchingSection) {
+                    whoIsWatchingSection.classList.add('show');
+                }
+            }, 300);
+            
+            window.setTimeout(() => {
+                if (loadingScreen) {
+                    loadingScreen.style.display = 'none';
+                }
+            }, 800);
+        }, introDuration);
+    }
+
+    function startIntroExperience() {
+        if (introStarted) return;
+        introStarted = true;
+
+        if (loadingScreen) {
+            loadingScreen.classList.remove('awaiting-start');
+        }
+
+        finishIntroAfterDelay();
+    }
+
+    function playIntroSound() {
+        if (!netflixSound || soundPlayed || isProfileNavigationStarting) {
+            return Promise.resolve(false);
+        }
+
+        netflixSound.pause();
+        netflixSound.currentTime = 0;
+        netflixSound.volume = 0.65;
+
+        return netflixSound.play()
+            .then(() => {
+                soundPlayed = true;
+                return true;
+            })
+            .catch(error => {
+                console.log('Opening sound blocked or unavailable:', error);
+                return false;
+            });
+    }
+
+    function waitForStartGesture() {
+        if (!loadingScreen || introStarted) return;
+        loadingScreen.classList.add('awaiting-start');
+
+        if (introStartButton) {
+            introStartButton.focus({ preventScroll: true });
+        }
+    }
+
+    if (introStartButton) {
+        introStartButton.addEventListener('click', () => {
+            playIntroSound().then(didPlay => {
+                startIntroExperience();
+            });
+        });
+    }
     
     if (netflixSound) {
-        // Listen for error (file not found)
-        netflixSound.addEventListener('error', (e) => {
-            console.log('Audio file not found or failed to load');
-            // Use fallback tone
-            if (!soundPlayed) {
-                setTimeout(() => {
-                    if (!isProfileNavigationStarting) {
-                        playNetflixTone();
-                        soundPlayed = true;
-                    }
-                }, 500);
-            }
+        netflixSound.addEventListener('error', () => {
+            console.log('Audio file not found or failed to load.');
+            startIntroExperience();
         });
         
-        // Listen for loaded event
         netflixSound.addEventListener('canplaythrough', () => {
-            // Try to play the sound
-            attemptPlaySound(netflixSound);
-            soundPlayed = true;
+            playIntroSound().then(didPlay => {
+                if (didPlay) {
+                    startIntroExperience();
+                } else {
+                    waitForStartGesture();
+                }
+            });
         });
         
-        // Try to play immediately (may be blocked by autoplay policy)
-        if (!attemptPlaySound(netflixSound)) {
-            soundPlayed = false;
-        }
+        netflixSound.load();
+        playIntroSound().then(didPlay => {
+            if (didPlay) {
+                startIntroExperience();
+            } else {
+                waitForStartGesture();
+            }
+        });
     } else {
-        // No audio element found, use tone
-        setTimeout(() => {
-            if (!isProfileNavigationStarting) {
-                playNetflixTone();
-                soundPlayed = true;
-            }
-        }, 500);
+        startIntroExperience();
     }
-    
-    // Fallback: If no sound played after a moment, use generated tone
-    setTimeout(() => {
-        if (!soundPlayed && !isProfileNavigationStarting) {
-            playNetflixTone();
-        }
-    }, 800);
-    
-    // After animation completes, fade out loading screen and show "Who's Watching"
-    setTimeout(() => {
-        if (loadingScreen) {
-            loadingScreen.classList.add('fade-out');
-        }
-        
-        // Show "Who's Watching" section
-        setTimeout(() => {
-            if (whoIsWatchingSection) {
-                whoIsWatchingSection.classList.add('show');
-            }
-        }, 300);
-        
-        // Remove loading screen from DOM after fade out
-        setTimeout(() => {
-            if (loadingScreen) {
-                loadingScreen.style.display = 'none';
-            }
-        }, 800);
-    }, 2500); // Total animation duration
 });
 
 // Who's Watching Profile Selection
@@ -130,31 +120,47 @@ const heroSection = document.querySelector('.hero');
 const profileButtons = document.querySelectorAll('.profile');
 
 profileButtons.forEach(profile => {
-    profile.addEventListener('click', function() {
+    profile.addEventListener('click', function(event) {
+        event.preventDefault();
+
+        if (isProfileNavigationStarting) return;
         isProfileNavigationStarting = true;
 
         const selectedProfile = this.getAttribute('data-profile');
         const introSound = document.getElementById('netflix-sound');
         const clickSound = document.getElementById('profile-click-sound');
+        let hasNavigated = false;
+
+        function navigateToProfile() {
+            if (hasNavigated) return;
+            hasNavigated = true;
+            window.location.href = `${selectedProfile}.html`;
+        }
 
         if (introSound) {
             introSound.pause();
             introSound.currentTime = 0;
         }
 
-        if (clickSound) {
-            clickSound.pause();
-            clickSound.currentTime = 0;
-            clickSound.volume = 0.8;
-            clickSound.play().catch(error => {
-                console.log('Could not play profile click sound:', error);
+        if (!clickSound) {
+            navigateToProfile();
+            return;
+        }
+
+        clickSound.pause();
+        clickSound.currentTime = 0;
+        clickSound.muted = false;
+        clickSound.volume = 1;
+
+        const playPromise = clickSound.play();
+        if (playPromise) {
+            playPromise.catch(error => {
+                console.log('Could not play profile-click.mp3:', error);
+                navigateToProfile();
             });
         }
 
-        // Navigate after the click sound starts.
-        setTimeout(() => {
-            window.location.href = `${selectedProfile}.html`;
-        }, 500);
+        window.setTimeout(navigateToProfile, 750);
     });
 });
 
