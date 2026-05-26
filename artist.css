@@ -15,6 +15,19 @@
     padding-top: 100px;
 }
 
+.artist-hero.profile-billboard {
+    position: relative;
+    overflow: hidden;
+    justify-content: flex-start;
+    text-align: left;
+    padding: 120px 6vw 80px;
+}
+
+.artist-hero.profile-billboard .artist-hero-content {
+    max-width: 680px;
+    text-align: left;
+}
+
 .artist-hero-content h1 {
     font-size: 5rem;
     font-weight: bold;
@@ -58,7 +71,7 @@
 }
 
 .gallery-item {
-    position: Executive;
+    position: relative;
     overflow: hidden;
     border-radius: 10px;
     aspect-ratio: 1;
@@ -161,4 +174,3 @@
         font-size: 2rem;
     }
 }
-

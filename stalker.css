@@ -15,6 +15,19 @@
     padding-top: 100px;
 }
 
+.stalker-hero.profile-billboard {
+    position: relative;
+    overflow: hidden;
+    justify-content: flex-start;
+    text-align: left;
+    padding: 120px 6vw 80px;
+}
+
+.stalker-hero.profile-billboard .stalker-hero-content {
+    max-width: 680px;
+    text-align: left;
+}
+
 .stalker-hero-content h1 {
     font-size: 4rem;
     font-weight: bold;
@@ -209,4 +222,3 @@ a.memory-item {
         grid-template-columns: 1fr;
     }
 }
-

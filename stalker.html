@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Personal Life | Sathwika's Portfolio</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="stalker.css">
+    <link rel="stylesheet" href="styles.css?v=3">
+    <link rel="stylesheet" href="stalker.css?v=2">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body class="stalker-body">
@@ -27,11 +27,43 @@
     </nav>
 
     <!-- Hero Section -->
-    <section id="home" class="stalker-hero">
+    <section id="home" class="stalker-hero profile-billboard stalker-billboard">
+        <div class="billboard-preview" aria-hidden="true">
+            <div class="preview-window">
+                <div class="preview-photo-stack one"></div>
+                <div class="preview-photo-stack two"></div>
+                <div class="preview-photo-stack three"></div>
+            </div>
+        </div>
         <div class="stalker-hero-content">
+            <p class="billboard-eyebrow">Personal Picks</p>
             <h1 class="stalker-hero-title">Welcome, curious explorer! 👀</h1>
             <p class="stalker-hero-subtitle">Here's the random stuff about me...</p>
             <button class="stalker-btn">Scroll Down</button>
+        </div>
+    </section>
+
+    <section class="netflix-shelves" aria-label="Personal life highlights">
+        <div class="container">
+            <h2 class="row-title">Because You Chose Stalker</h2>
+            <div class="title-row">
+                <a href="family.html" class="title-card">
+                    <img src="images/babyHut.JPG" alt="Family memories preview">
+                    <span>My People</span>
+                </a>
+                <a href="adventures.html" class="title-card">
+                    <img src="https://images.unsplash.com/photo-1537225228614-56cc3556d7ed?w=800" alt="Adventures preview">
+                    <span>Adventures</span>
+                </a>
+                <a href="celebrations.html" class="title-card">
+                    <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=800" alt="Celebrations preview">
+                    <span>Celebrations</span>
+                </a>
+                <a href="#fun-facts" class="title-card">
+                    <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=800" alt="Fun facts preview">
+                    <span>Random Fun Facts</span>
+                </a>
+            </div>
         </div>
     </section>
 

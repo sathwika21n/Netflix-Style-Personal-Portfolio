@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Developer Profile | Sathwika's Portfolio</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css?v=3">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
@@ -27,8 +27,16 @@
     </nav>
 
     <!-- Hero Section -->
-    <section id="home" class="hero">
+    <section id="home" class="hero profile-billboard developer-billboard">
+        <div class="billboard-preview" aria-hidden="true">
+            <div class="preview-window">
+                <div class="preview-code-line"></div>
+                <div class="preview-code-line short"></div>
+                <div class="preview-code-card"></div>
+            </div>
+        </div>
         <div class="hero-content">
+            <p class="billboard-eyebrow">Now Playing</p>
             <h1 class="hero-title">Hi, I'm Sathwika Thatiparthi</h1>
             <p class="hero-subtitle">Computer Science Student at University of Texas at Dallas</p>
             <div class="hero-buttons">
@@ -38,6 +46,30 @@
         </div>
         <div class="hero-scroll">
             <i class="fas fa-chevron-down"></i>
+        </div>
+    </section>
+
+    <section class="netflix-shelves" aria-label="Developer highlights">
+        <div class="container">
+            <h2 class="row-title">Continue Watching: Developer Mode</h2>
+            <div class="title-row">
+                <a href="#projects" class="title-card">
+                    <img src="images/endoTrack.png" alt="EndoTrack preview">
+                    <span>EndoTrack</span>
+                </a>
+                <a href="#projects" class="title-card">
+                    <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?w=800" alt="Advisor AI preview">
+                    <span>Advisor AI</span>
+                </a>
+                <a href="#skills" class="title-card">
+                    <img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=800" alt="Technical skills preview">
+                    <span>Tech Stack</span>
+                </a>
+                <a href="#contact" class="title-card">
+                    <img src="https://images.unsplash.com/photo-1517048676732-d65bc937f952?w=800" alt="Contact preview">
+                    <span>Build With Me</span>
+                </a>
+            </div>
         </div>
     </section>
 

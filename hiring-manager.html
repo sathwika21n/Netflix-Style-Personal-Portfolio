@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="located">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device brightly-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hiring Manager View | Sathwika's Portfolio</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css?v=3">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
@@ -27,8 +27,16 @@
     </nav>
 
     <!-- Hero Section -->
-    <section id="home" class="hero">
+    <section id="home" class="hero profile-billboard hiring-billboard">
+        <div class="billboard-preview" aria-hidden="true">
+            <div class="preview-window">
+                <div class="preview-metric">100%</div>
+                <div class="preview-code-line"></div>
+                <div class="preview-code-line short"></div>
+            </div>
+        </div>
         <div class="hero-content">
+            <p class="billboard-eyebrow">Featured Candidate</p>
             <h1 class="hero-title">Candidate: Sathwika Thatiparthi</h1>
             <p class="hero-subtitle">Looking for talented developers? Here's what I bring to the table.</p>
             <div class="hero-buttons">
@@ -38,6 +46,30 @@
         </div>
         <div class="hero-scroll">
             <i class="fas fa-chevron-down"></i>
+        </div>
+    </section>
+
+    <section class="netflix-shelves" aria-label="Hiring manager highlights">
+        <div class="container">
+            <h2 class="row-title">Top Picks for Hiring Managers</h2>
+            <div class="title-row">
+                <a href="#about" class="title-card">
+                    <img src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=800" alt="Professional summary preview">
+                    <span>Professional Summary</span>
+                </a>
+                <a href="#projects" class="title-card">
+                    <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800" alt="Project work preview">
+                    <span>Project Evidence</span>
+                </a>
+                <a href="#skills" class="title-card">
+                    <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800" alt="Skills preview">
+                    <span>Technical Skills</span>
+                </a>
+                <a href="#contact" class="title-card">
+                    <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=800" alt="Contact preview">
+                    <span>Start a Conversation</span>
+                </a>
+            </div>
         </div>
     </section>
 
@@ -88,7 +120,7 @@
                         <p>An AI-powered academic advisor application designed to help students navigate their course selections and degree paths.</p>
                         <div class="project-tags">
                             <span>Python3</span>
-                            <span>Steamlit</span>
+                            <span>Streamlit</span>
                         </div>
                     </div>
                 </div>
@@ -102,8 +134,8 @@
                         </div>
                     </div>
                     <div class="project-info">
-                        <h3>Project 2</h3>
-                        <p>Project description goes here.</p>
+                        <h3>Alumni Tracking System - NAF</h3>
+                        <p>A system for tracking and managing alumni information and engagement.</p>
                         <div class="project-tags">
                             <span>Tech 1</span>
                             <span>Tech 2</span>
@@ -121,8 +153,8 @@
                         </div>
                     </div>
                     <div class="project-info">
-                        <h3>Project 3</h3>
-                        <p>Project</p>
+                        <h3>EndoTrack</h3>
+                        <p>A health-focused app with personalized recommendations and local hospital suggestions.</p>
                         <div class="project-tags">
                             <span>Tech 1</span>
                             <span>Tech 2</span>
@@ -140,8 +172,8 @@
                         </div>
                     </div>
                     <div class="project-info">
-                        <h3>Project 4</h3>
-                        <p>Project description goes here.</p>
+                        <h3>Coming Soon</h3>
+                        <p>More technical work and project demos will be added here.</p>
                         <div class="project-tags">
                             <span>Tech 1</span>
                             <span>Tech 2</span>
@@ -181,7 +213,8 @@
                 </div>
                 <div class="skill-item">
                     <i class="fab fa-react"></i>
-                    <h3>React</h (<div class="skill-bar">
+                    <h3>React</h3>
+                    <div class="skill-bar">
                         <div class="skill-progress" style="width: 80%"></div>
                     </div>
                 </div>
@@ -193,7 +226,7 @@
                     </div>
                 </div>
                 <div class="skill-item">
-                    <i class.pk="fab fa-python"></i>
+                    <i class="fab fa-python"></i>
                     <h3>Python</h3>
                     <div class="skill-bar">
                         <div class="skill-progress" style="width: 70%"></div>
@@ -236,4 +269,3 @@
     <script src="script.js"></script>
 </body>
 </html>
-
