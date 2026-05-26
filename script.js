@@ -9,6 +9,8 @@ window.addEventListener('DOMContentLoaded', () => {
     const introStartButton = document.querySelector('.intro-start-btn');
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const introDuration = prefersReducedMotion ? 500 : 3600;
+    const introSoundStorageKey = 'portfolioIntroSoundPlayed';
+    const hasPlayedIntroSound = getSessionFlag(introSoundStorageKey);
 
     if (profileClickSound) {
         profileClickSound.load();
@@ -49,13 +51,14 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 
     function playIntroSound() {
-        if (!netflixSound || soundPlayed || isProfileNavigationStarting) {
+        if (!netflixSound || soundPlayed || hasPlayedIntroSound || isProfileNavigationStarting) {
             return Promise.resolve(false);
         }
 
         netflixSound.pause();
         netflixSound.currentTime = 0;
         netflixSound.volume = 0.65;
+        setSessionFlag(introSoundStorageKey);
 
         return netflixSound.play()
             .then(() => {
@@ -83,6 +86,23 @@ window.addEventListener('DOMContentLoaded', () => {
                 startIntroExperience();
             });
         });
+    }
+
+    if (hasPlayedIntroSound) {
+        if (netflixSound) {
+            netflixSound.pause();
+            netflixSound.currentTime = 0;
+        }
+
+        if (loadingScreen) {
+            loadingScreen.style.display = 'none';
+        }
+
+        if (whoIsWatchingSection) {
+            whoIsWatchingSection.classList.add('show');
+        }
+
+        return;
     }
     
     if (netflixSound) {
@@ -113,6 +133,22 @@ window.addEventListener('DOMContentLoaded', () => {
         startIntroExperience();
     }
 });
+
+function getSessionFlag(key) {
+    try {
+        return sessionStorage.getItem(key) === 'true';
+    } catch (error) {
+        return false;
+    }
+}
+
+function setSessionFlag(key) {
+    try {
+        sessionStorage.setItem(key, 'true');
+    } catch (error) {
+        console.log('Could not save intro sound preference:', error);
+    }
+}
 
 // Who's Watching Profile Selection
 const whoIsWatchingSection = document.querySelector('.who-is-watching');
