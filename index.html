@@ -47,6 +47,7 @@
                         <span class="face-eye left-eye"></span>
                         <span class="face-eye right-eye"></span>
                         <span class="face-smile"></span>
+                        <button class="profile-edit-btn" type="button" aria-label="Edit Developer profile"><i class="fas fa-pencil-alt"></i></button>
                     </div>
                     <p class="profile-name">Developer</p>
                 </div>
@@ -55,6 +56,7 @@
                         <span class="face-eye left-eye"></span>
                         <span class="face-eye right-eye"></span>
                         <span class="face-smile"></span>
+                        <button class="profile-edit-btn" type="button" aria-label="Edit Hiring Manager profile"><i class="fas fa-pencil-alt"></i></button>
                     </div>
                     <p class="profile-name">Hiring Manager</p>
                 </div>
@@ -63,6 +65,7 @@
                         <span class="face-eye left-eye"></span>
                         <span class="face-eye right-eye"></span>
                         <span class="face-smile"></span>
+                        <button class="profile-edit-btn" type="button" aria-label="Edit Stalker profile"><i class="fas fa-pencil-alt"></i></button>
                     </div>
                     <p class="profile-name">Stalker</p>
                 </div>
@@ -71,6 +74,7 @@
                         <span class="face-eye left-eye"></span>
                         <span class="face-eye right-eye"></span>
                         <span class="face-smile"></span>
+                        <button class="profile-edit-btn" type="button" aria-label="Edit Artist profile"><i class="fas fa-pencil-alt"></i></button>
                     </div>
                     <p class="profile-name">Artist</p>
                 </div>
@@ -79,6 +83,15 @@
         </div>
     </section>
 
-    <script src="script.js?v=11"></script>
+    <div class="manage-modal" aria-hidden="true">
+        <div class="manage-modal-card" role="dialog" aria-modal="true" aria-labelledby="manageModalTitle">
+            <p class="modal-eyebrow" id="manageModalEyebrow">Profile Settings</p>
+            <h2 id="manageModalTitle">Personality settings are locked.</h2>
+            <p id="manageModalMessage">Nice try. Sathwika's profiles are carefully curated and cannot be edited by curious viewers.</p>
+            <button class="modal-close-btn" type="button" id="manageModalButton">Okay, fair</button>
+        </div>
+    </div>
+
+    <script src="script.js?v=15"></script>
 </body>
 </html>

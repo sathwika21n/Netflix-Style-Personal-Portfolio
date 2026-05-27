@@ -150,14 +150,139 @@ function setSessionFlag(key) {
     }
 }
 
+document.querySelectorAll('.billboard-video').forEach(video => {
+    const previewWindow = video.closest('.preview-window');
+
+    const showVideoPreview = () => {
+        if (!previewWindow) return;
+        previewWindow.classList.add('has-video');
+        video.play().catch(error => {
+            console.log('Could not autoplay profile preview video:', error);
+        });
+    };
+
+    video.addEventListener('canplay', showVideoPreview, { once: true });
+    video.addEventListener('error', () => {
+        if (previewWindow) {
+            previewWindow.classList.remove('has-video');
+        }
+    });
+});
+
 // Who's Watching Profile Selection
 const whoIsWatchingSection = document.querySelector('.who-is-watching');
 const heroSection = document.querySelector('.hero');
 const profileButtons = document.querySelectorAll('.profile');
+const manageButton = document.querySelector('.manage-btn');
+const manageModal = document.querySelector('.manage-modal');
+const modalCloseButton = document.querySelector('.modal-close-btn');
+const profileEditButtons = document.querySelectorAll('.profile-edit-btn');
+const manageModalEyebrow = document.getElementById('manageModalEyebrow');
+const manageModalTitle = document.getElementById('manageModalTitle');
+const manageModalMessage = document.getElementById('manageModalMessage');
+const manageModalButton = document.getElementById('manageModalButton');
+const manageModalCopy = {
+    developer: {
+        eyebrow: 'Developer Settings',
+        title: 'You can try editing this profile, but the coffee addiction and "one more feature" mindset are pretty much permanent at this point.',
+        message: 'Probably best to leave it alone.',
+        button: 'Ship it'
+    },
+    'hiring-manager': {
+        eyebrow: 'Hiring Manager Settings',
+        title: 'This profile can\'t be modified.',
+        message: 'The ambitious energy, project collection, and "I\'ll figure it out" attitude are built into the system.',
+        button: 'Seems employable'
+    },
+    stalker: {
+        eyebrow: 'Curious Explorer Settings',
+        title: 'Editing disabled.',
+        message: 'This profile will continue opening random tabs, asking deep questions, and learning unnecessary facts for fun.',
+        button: 'No bugs detected'
+    },
+    artist: {
+        eyebrow: 'Artist Settings',
+        title: 'You don\'t have permission to change this profile.',
+        message: 'The dramatic playlists, pretty color palettes, and cafe-core energy are considered essential personality traits.',
+        button: 'Respectfully, let her create'
+    },
+    default: {
+        eyebrow: 'Profile Settings',
+        title: 'Personality settings are locked.',
+        message: 'Nice try. Sathwika\'s profiles are carefully curated and cannot be edited by curious viewers.',
+        button: 'Okay, fair'
+    }
+};
+
+function setManageMode(isEnabled) {
+    if (!whoIsWatchingSection || !manageButton) return;
+    whoIsWatchingSection.classList.toggle('manage-mode', isEnabled);
+    manageButton.textContent = isEnabled ? 'Done' : 'Manage Profiles';
+}
+
+function openManageModal(profileKey = 'default') {
+    if (!manageModal) return;
+    const copy = manageModalCopy[profileKey] || manageModalCopy.default;
+
+    if (manageModalEyebrow) manageModalEyebrow.textContent = copy.eyebrow;
+    if (manageModalTitle) manageModalTitle.textContent = copy.title;
+    if (manageModalMessage) manageModalMessage.textContent = copy.message;
+    if (manageModalButton) manageModalButton.textContent = copy.button;
+
+    manageModal.classList.add('show');
+    manageModal.setAttribute('aria-hidden', 'false');
+    if (modalCloseButton) {
+        modalCloseButton.focus();
+    }
+}
+
+function closeManageModal() {
+    if (!manageModal) return;
+    manageModal.classList.remove('show');
+    manageModal.setAttribute('aria-hidden', 'true');
+}
+
+if (manageButton) {
+    manageButton.addEventListener('click', () => {
+        setManageMode(!whoIsWatchingSection.classList.contains('manage-mode'));
+    });
+}
+
+profileEditButtons.forEach(button => {
+    button.addEventListener('click', event => {
+        event.preventDefault();
+        event.stopPropagation();
+        const profile = button.closest('.profile');
+        openManageModal(profile?.dataset.profile);
+    });
+});
+
+if (modalCloseButton) {
+    modalCloseButton.addEventListener('click', closeManageModal);
+}
+
+if (manageModal) {
+    manageModal.addEventListener('click', event => {
+        if (event.target === manageModal) {
+            closeManageModal();
+        }
+    });
+}
+
+document.addEventListener('keydown', event => {
+    if (event.key === 'Escape') {
+        closeManageModal();
+    }
+});
 
 profileButtons.forEach(profile => {
     profile.addEventListener('click', function(event) {
         event.preventDefault();
+
+        if (whoIsWatchingSection && whoIsWatchingSection.classList.contains('manage-mode')) {
+            openManageModal(this.dataset.profile);
+            return;
+        }
 
         if (isProfileNavigationStarting) return;
         isProfileNavigationStarting = true;
