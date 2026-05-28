@@ -84,7 +84,8 @@
     overflow: hidden;
     aspect-ratio: 1;
     cursor: pointer;
-    transition: transform 0.3s ease;
+    background: #e50914;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, padding 0.3s ease;
 }
 
 a.memory-item {
@@ -94,13 +95,19 @@ a.memory-item {
 
 .memory-item:hover {
     transform: translateY(-10px);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    padding: 6px;
+    box-shadow: 0 20px 44px rgba(229, 9, 20, 0.38);
 }
 
 .memory-item img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.memory-item:hover img {
+    transform: scale(1.08);
 }
 
 .memory-label {
@@ -108,11 +115,12 @@ a.memory-item {
     bottom: 0;
     left: 0;
     right: 0;
-    background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+    background: linear-gradient(to top, rgba(229, 9, 20, 0.88), rgba(0, 0, 0, 0.2), transparent);
     padding: 1.5rem;
     display: flex;
     align-items: center;
     gap: 1rem;
+    z-index: 1;
 }
 
 .memory-icon {
@@ -143,13 +151,15 @@ a.memory-item {
     padding: 2rem;
     border-radius: 15px;
     text-align: center;
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
     border: 1px solid rgba(255,255,255,0.1);
 }
 
 .fact-card:hover {
     transform: scale(1.05);
-    background: rgba(255,255,255,0.08);
+    background: rgba(229, 9, 20, 0.16);
+    border-color: rgba(229, 9, 20, 0.5);
+    box-shadow: 0 20px 44px rgba(229, 9, 20, 0.28);
 }
 
 .fact-icon {
@@ -160,7 +170,7 @@ a.memory-item {
 .fact-card h3 {
     color: #ffffff;
     margin-bottom: 1rem;
-    font-size:  ARCHrem;
+    font-size: 1.3rem;
 }
 
 .fact-card p {
@@ -185,13 +195,14 @@ a.memory-item {
     background: rgba(255,255,255,0.05);
     padding: 2.5rem;
     border-radius: 15px;
-    border-left: 4px solid #4facfe;
-    transition: transform 0.3s ease;
+    border-left: 4px solid #e50914;
+    transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .random-item:hover {
     transform: translateX(10px);
-    background: rgba(255,255,255,0.08);
+    background: rgba(229, 9, 20, 0.16);
+    box-shadow: 0 18px 40px rgba(229, 9, 20, 0.22);
 }
 
 .random-item h3 {

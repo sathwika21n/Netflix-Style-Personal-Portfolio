@@ -76,11 +76,14 @@
     border-radius: 10px;
     aspect-ratio: 1;
     cursor: pointer;
-    transition: transform 0.3s ease;
+    background: #e50914;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, padding 0.3s ease;
 }
 
 .gallery-item:hover {
     transform: scale(1.05);
+    padding: 6px;
+    box-shadow: 0 20px 44px rgba(229, 9, 20, 0.35);
 }
 
 .gallery-item img {
@@ -99,10 +102,11 @@
     bottom: 0;
     left: 0;
     right: 0;
-    background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+    background: linear-gradient(to top, rgba(229, 9, 20, 0.9), rgba(0, 0, 0, 0.25), transparent);
     padding: 2rem;
     transform: translateY(100%);
     transition: transform 0.3s ease;
+    z-index: 1;
 }
 
 .gallery-item:hover .gallery-overlay {
@@ -121,7 +125,7 @@
 }
 
 .gallery-date {
-    color: #f093fb;
+    color: #ffb3b8;
     font-weight: bold;
 }
 

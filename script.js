@@ -181,6 +181,9 @@ const manageModalEyebrow = document.getElementById('manageModalEyebrow');
 const manageModalTitle = document.getElementById('manageModalTitle');
 const manageModalMessage = document.getElementById('manageModalMessage');
 const manageModalButton = document.getElementById('manageModalButton');
+const profileLoadingOverlay = document.querySelector('.profile-loading-overlay');
+const profileLoadingTitle = document.getElementById('profileLoadingTitle');
+const profileLoadingMessage = document.getElementById('profileLoadingMessage');
 const manageModalCopy = {
     developer: {
         eyebrow: 'Developer Settings',
@@ -213,6 +216,28 @@ const manageModalCopy = {
         button: 'Okay, fair'
     }
 };
+const profileLoadingCopy = {
+    developer: {
+        title: 'Loading Developer Profile...',
+        message: 'Compiling projects, skills, and one more feature.'
+    },
+    'hiring-manager': {
+        title: 'Loading Hiring Manager View...',
+        message: 'Polishing resume highlights and project evidence.'
+    },
+    stalker: {
+        title: 'Loading Curious Explorer...',
+        message: 'Opening memories, fun facts, and controlled chaos.'
+    },
+    artist: {
+        title: 'Loading Artist Profile...',
+        message: 'Mixing colors, playlists, and gallery energy.'
+    },
+    default: {
+        title: 'Opening Profile...',
+        message: 'Preparing your personalized portfolio view.'
+    }
+};
 
 function setManageMode(isEnabled) {
     if (!whoIsWatchingSection || !manageButton) return;
@@ -240,6 +265,17 @@ function closeManageModal() {
     if (!manageModal) return;
     manageModal.classList.remove('show');
     manageModal.setAttribute('aria-hidden', 'true');
+}
+
+function showProfileLoading(profileKey = 'default') {
+    if (!profileLoadingOverlay) return;
+    const copy = profileLoadingCopy[profileKey] || profileLoadingCopy.default;
+
+    if (profileLoadingTitle) profileLoadingTitle.textContent = copy.title;
+    if (profileLoadingMessage) profileLoadingMessage.textContent = copy.message;
+
+    profileLoadingOverlay.classList.add('show');
+    profileLoadingOverlay.setAttribute('aria-hidden', 'false');
 }
 
 if (manageButton) {
@@ -272,6 +308,7 @@ if (manageModal) {
 document.addEventListener('keydown', event => {
     if (event.key === 'Escape') {
         closeManageModal();
+        closeConfidentialProjectModal();
     }
 });
 
@@ -304,6 +341,7 @@ profileButtons.forEach(profile => {
         }
 
         if (!clickSound) {
+            showProfileLoading(selectedProfile);
             navigateToProfile();
             return;
         }
@@ -312,6 +350,8 @@ profileButtons.forEach(profile => {
         clickSound.currentTime = 0;
         clickSound.muted = false;
         clickSound.volume = 1;
+
+        showProfileLoading(selectedProfile);
 
         const playPromise = clickSound.play();
         if (playPromise) {
@@ -458,9 +498,58 @@ if (contactForm) {
 // View Project and View Code button handlers
 const viewProjectButtons = document.querySelectorAll('.btn-view');
 const viewCodeButtons = document.querySelectorAll('.btn-github');
+const confidentialProjectButtons = document.querySelectorAll('.confidential-project-action');
+
+function openConfidentialProjectModal() {
+    let modal = document.querySelector('.confidential-project-modal');
+
+    if (!modal) {
+        modal = document.createElement('div');
+        modal.className = 'confidential-project-modal';
+        modal.setAttribute('aria-hidden', 'true');
+        modal.innerHTML = `
+            <div class="confidential-project-card" role="dialog" aria-modal="true" aria-labelledby="confidentialProjectTitle">
+                <p class="modal-eyebrow">Project Access</p>
+                <h2 id="confidentialProjectTitle">Project access is restricted.</h2>
+                <p>Due to the confidential nature of the Alumni Tracking System and client ownership requirements, the live project and source code cannot be shared publicly.</p>
+                <p>I would be happy to discuss my role, technical approach, and contributions at a high level.</p>
+                <button class="confidential-project-close" type="button">Understood</button>
+            </div>
+        `;
+        document.body.appendChild(modal);
+
+        modal.addEventListener('click', event => {
+            if (event.target === modal) {
+                closeConfidentialProjectModal();
+            }
+        });
+
+        modal.querySelector('.confidential-project-close').addEventListener('click', closeConfidentialProjectModal);
+    }
+
+    modal.classList.add('show');
+    modal.setAttribute('aria-hidden', 'false');
+    modal.querySelector('.confidential-project-close')?.focus();
+}
+
+function closeConfidentialProjectModal() {
+    const modal = document.querySelector('.confidential-project-modal');
+    if (!modal) return;
+    modal.classList.remove('show');
+    modal.setAttribute('aria-hidden', 'true');
+}
+
+confidentialProjectButtons.forEach(button => {
+    button.addEventListener('click', event => {
+        event.preventDefault();
+        event.stopPropagation();
+        openConfidentialProjectModal();
+    });
+});
 
 viewProjectButtons.forEach((btn, index) => {
     btn.addEventListener('click', (e) => {
+        if (btn.classList.contains('confidential-project-action')) return;
         e.stopPropagation();
         // Replace with actual project URLs
         const projectTitles = [
@@ -475,6 +564,7 @@ viewProjectButtons.forEach((btn, index) => {
 
 viewCodeButtons.forEach((btn, index) => {
     btn.addEventListener('click', (e) => {
+        if (btn.classList.contains('confidential-project-action')) return;
         e.stopPropagation();
         // Replace with actual GitHub URLs
         //alert(`Opening GitHub repository for project ${index + 1}!`);
