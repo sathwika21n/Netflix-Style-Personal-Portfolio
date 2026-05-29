@@ -478,20 +478,33 @@ if (contactForm) {
     contactForm.addEventListener('submit', (e) => {
         e.preventDefault();
         
-        // Get form data
-        const formData = new FormData(contactForm);
-        const name = contactForm.querySelector('input[type="text"]').value;
-        const email = contactForm.querySelector('input[type="email"]').value;
-        const message = contactForm.querySelector('textarea').value;
-        
-        // Simulate form submission
-        console.log('Form submitted:', { name, email, message });
-        
-        // Show success message
-        alert('Thank you for your message! I\'ll get back to you soon.');
-        
-        // Reset form
-        contactForm.reset();
+        const textInputs = contactForm.querySelectorAll('input[type="text"]');
+        const name = textInputs[0]?.value.trim() || 'Portfolio visitor';
+        const company = textInputs[1]?.value.trim();
+        const email = contactForm.querySelector('input[type="email"]')?.value.trim() || '';
+        const message = contactForm.querySelector('textarea')?.value.trim() || '';
+        const subject = `Portfolio inquiry from ${name}${company ? ` at ${company}` : ''}`;
+        const bodyLines = [
+            `Name: ${name}`,
+            `Email: ${email}`,
+            company ? `Company: ${company}` : '',
+            '',
+            'Message:',
+            message
+        ].filter(line => line !== '');
+        const body = bodyLines.join('\n');
+        const recipientEmail = 'sathwika21n@gmail.com';
+        const mailtoUrl = `mailto:${recipientEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(recipientEmail)}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        const gmailWindow = window.open(gmailUrl, '_blank', 'noopener');
+
+        if (!gmailWindow) {
+            window.location.href = mailtoUrl;
+            alert('Your email app should open with the inquiry filled in. Please send it from there so Sathwika receives it directly.');
+            return;
+        }
+
+        alert('A Gmail compose window should open with the inquiry filled in. Please send it from there so Sathwika receives it directly.');
     });
 }
 
